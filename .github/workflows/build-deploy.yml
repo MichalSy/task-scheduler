@@ -30,7 +30,7 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Publish
-        run: dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
+        run: dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer -p:ContainerImageName=docker-image -p:ContainerImageTags=latest
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
@@ -41,8 +41,8 @@ jobs:
 
       - name: Tag image
         run: |
-          docker tag task-scheduler:main ${{ env.REGISTRY }}/${{ env.REPO }}:main
+          docker tag docker-image:latest ${{ env.REGISTRY }}/${{ env.REPO }}:${{ github.sha }}
 
       - name: Push image to registry
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.REPO }}:main
+          docker push ${{ env.REGISTRY }}/${{ env.REPO }}:${{ github.sha }}
