@@ -24,9 +24,10 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.x'
+          cache: true
 
       - name: Publish
-        run: dotnet publish **/*.csproj --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
+        run: dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
