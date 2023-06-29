@@ -6,6 +6,8 @@ WORKDIR /app
 EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-preview AS build
+RUN apt update
+RUN apt install -y clang zlib1g-dev
 WORKDIR /src
 COPY ["Task.Scheduler/Task.Scheduler.csproj", "Task.Scheduler/"]
 RUN dotnet restore "Task.Scheduler/Task.Scheduler.csproj"
@@ -14,7 +16,7 @@ WORKDIR "/src/Task.Scheduler"
 RUN dotnet build "Task.Scheduler.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Task.Scheduler.csproj" -c Release -o /app/publish /p:UseAppHost=true
+RUN dotnet publish "Task.Scheduler.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
