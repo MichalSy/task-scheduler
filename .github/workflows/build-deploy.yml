@@ -55,4 +55,4 @@ jobs:
 
       - name: Push built container to Azure Container Registry
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.REPO }}
+          docker push ${{ steps.meta.outputs.tags }}
