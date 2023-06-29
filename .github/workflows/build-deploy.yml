@@ -48,3 +48,7 @@ jobs:
       #     push: true
       #     tags: ${{ steps.meta.outputs.tags }}
       #     labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Push built container to Azure Container Registry
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
