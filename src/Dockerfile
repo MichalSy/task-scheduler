@@ -14,7 +14,7 @@ WORKDIR "/src/Task.Scheduler"
 RUN dotnet build "Task.Scheduler.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Task.Scheduler.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Task.Scheduler.csproj" -c Release -o /app/publish /p:UseAppHost=true
 
 FROM base AS final
 WORKDIR /app
