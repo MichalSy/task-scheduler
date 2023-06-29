@@ -43,6 +43,6 @@ jobs:
         run: |
           docker tag task-scheduler:main ${{ env.REGISTRY }}/${{ env.REPO }}:main
 
-      - name: Push built container to Azure Container Registry
+      - name: Push image to registry
         run: |
           docker push ${{ env.REGISTRY }}/${{ env.REPO }}:main
