@@ -24,7 +24,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.x'
-          cache: true
 
       - name: Publish
         run: dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer
