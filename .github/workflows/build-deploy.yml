@@ -39,7 +39,7 @@ jobs:
       - name: Publish
         run: |
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /t:PublishContainer \
-            -p:ContainerRegistry=${env.REGISTRY}
+            -p:ContainerRegistry=$REGISTRY
 
 
 
