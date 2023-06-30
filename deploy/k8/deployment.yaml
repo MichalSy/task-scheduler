@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: task-scheduler
-        image: ghcr.io/michalsy/task-scheduler:1.1.04e829
+        image: ghcr.io/michalsy/task-scheduler:1.1.a5c2bc
         ports:
         - containerPort: 8080
 
