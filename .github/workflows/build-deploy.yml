@@ -43,19 +43,9 @@ jobs:
           echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)" >> $GITHUB_ENV
           cat src/**/*.csproj
 
-      # - name: Publish
-      #   run: |
-      #     dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /t:PublishContainer \
-      #       -p:ContainerImageName=$REPO \
-      #       -p:ContainerImageTags=latest;$GITHUB_SHA \
-      #       -p:ContainerRegistry=$REGISTRY
-
-
-
-      # - name: Tag image
-      #   run: |
-      #     docker tag docker-image:latest ${{ env.REGISTRY }}/${{ env.REPO }}:${{ github.sha }}
-
-      # - name: Push image to registry
-      #   run: |
-      #     docker push ${{ env.REGISTRY }}/${{ env.REPO }}:${{ github.sha }}
+      - name: Publish
+        run: |
+          dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /t:PublishContainer \
+            -p:ContainerImageName=$REPO \
+            -p:ContainerImageTags=$APPVERSION \
+            -p:ContainerRegistry=$REGISTRY
