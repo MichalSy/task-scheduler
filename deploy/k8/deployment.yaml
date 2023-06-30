@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: task-scheduler
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -15,8 +15,6 @@ spec:
       containers:
       - name: task-scheduler
         image: ghcr.io/michalsy/task-scheduler:1.1.a5c2bc
-        ports:
-        - containerPort: 8080
 
 ---
 
@@ -30,7 +28,6 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
-    targetPort: 8080
 
 ---
 
