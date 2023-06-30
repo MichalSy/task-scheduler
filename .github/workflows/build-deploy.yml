@@ -41,6 +41,7 @@ jobs:
         run: |
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /t:PublishContainer \
             -p:ContainerImageName=$REPO \
+            -p:ContainerImageTags=latest,$GITHUB_SHA \
             -p:ContainerRegistry=$REGISTRY
 
 
