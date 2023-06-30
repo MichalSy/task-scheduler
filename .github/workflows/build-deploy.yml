@@ -25,24 +25,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.x'
+      # - name: Setup .NET Core SDK
+      #   uses: actions/setup-dotnet@v3
+      #   with:
+      #     dotnet-version: '8.x'
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Log in to the Container registry
+      #   uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      #   with:
+      #     registry: ${{ env.REGISTRY }}
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update version
         run: |
           sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" src/**/*.csproj
-          echo "VERSION=$(sed -n "s/<Version>\(.*\)<\/Version>/\1/p" src/**/*.csproj)" >>${GITHUB_ENV}
+          echo "VERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)" >>${GITHUB_ENV}
           echo $VERSION
-          echo "VERSION=$(sed -n "s/<Version>\(.*\)<\/Version>/\1/p" src/**/*.csproj)"
+          echo "VERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)"
           cat src/**/*.csproj
 
       # - name: Publish
