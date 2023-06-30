@@ -27,11 +27,8 @@ jobs:
           echo "generate repo name in lowercase"
           echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-          echo "generate short SHA"
-          echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-
           echo "generate package version number"
-          echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$GITHUB_SHA_SHORT" >> $GITHUB_ENV
+          echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
