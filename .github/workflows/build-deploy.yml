@@ -7,7 +7,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  REPO: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
@@ -17,13 +16,19 @@ jobs:
       packages: write
 
     steps:
-      - name: downcase REPO
-        run: |
-          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-          echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: downcase REPO
+        run: |
+          echo "generate repo name in lowercase"
+          echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+          echo "generate short SHA"
+          echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+
+          echo "generate package version number"
+          echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$GITHUB_SHA_SHORT" >> $GITHUB_ENV
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
@@ -37,11 +42,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate package version number
-        run: |
-          echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$GITHUB_SHA_SHORT" >> $GITHUB_ENV
-
-      - name: Publish
+      - name: Publish to registry
         run: |
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /t:PublishContainer \
             -p:ContainerImageName=$REPO \
