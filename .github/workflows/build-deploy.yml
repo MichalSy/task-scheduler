@@ -37,12 +37,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Update version
+        run: |
+          sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" src/**/*.csproj
+
       - name: Publish
         run: |
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /t:PublishContainer \
             -p:ContainerImageName=$REPO \
-            -p:ContainerImageTags=latest \
-            -p:ContainerImageTags=$GITHUB_SHA \
+            -p:ContainerImageTags=$GITHUB_SHA;latest \
             -p:ContainerRegistry=$REGISTRY
 
 
