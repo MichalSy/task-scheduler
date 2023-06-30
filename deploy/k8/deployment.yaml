@@ -28,7 +28,7 @@ spec:
   selector:
     app: task-scheduler
   ports:
-  - port: 80
+  - port: 8080
     protocol: TCP
     targetPort: 8080
 
@@ -47,4 +47,4 @@ spec:
       kind: Rule
       services:
         - name: task-scheduler-service
-          port: 80
+          port: 8080
