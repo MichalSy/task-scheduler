@@ -44,7 +44,7 @@ jobs:
 
       - name: Publish to registry
         run: |
-          dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /t:PublishContainer \
+          dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release --self-contained false /t:PublishContainer \
             -p:ContainerImageName=$REPO \
             -p:ContainerImageTags=$APPVERSION \
             -p:ContainerRegistry=$REGISTRY
