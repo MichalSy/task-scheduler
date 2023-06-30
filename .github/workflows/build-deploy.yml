@@ -40,6 +40,8 @@ jobs:
       - name: Update version
         run: |
           sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" src/**/*.csproj
+          echo "VERSION=$(sed -n "s/<Version>\(.*\)<\/Version>/\1/p" src/**/*.csproj)" >>${GITHUB_ENV}
+          echo $VERSION
           cat src/**/*.csproj
 
       - name: Publish
