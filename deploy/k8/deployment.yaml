@@ -39,8 +39,8 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host("task-scheduler.sytko.de")
+    - match: Host("scheduler.sytko.de")
       kind: Rule
       services:
-        - name: task-scheduler-service
+        - name: task-scheduler-service2
           port: 8080
