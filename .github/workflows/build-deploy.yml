@@ -20,41 +20,27 @@ jobs:
       - name: downcase REPO
         run: |
           echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-          echo $REPO
-          echo "HELLO=WORLD" >> $GITHUB_ENV
-          echo $HELLO
-
-      - name: Set env
-        run: |
-          echo "GITHUB_SHA_SHORT=BLA" >> $GITHUB_ENV
-          echo $GITHUB_SHA_SHORT
-      - name: Test
-        run: echo $GITHUB_SHA_SHORT
+          echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # - name: Setup .NET Core SDK
-      #   uses: actions/setup-dotnet@v3
-      #   with:
-      #     dotnet-version: '8.x'
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
 
-      # - name: Log in to the Container registry
-      #   uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update version
         run: |
-          sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" src/**/*.csproj
-          echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)" >> test.txt
-          cat test.txt
-          echo "HELLO=WORLD" >>${GITHUB_ENV}
-          echo $HELLO
-          echo $REPO
-          echo "-VERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)"
+          sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1$GITHUB_SHA_SHORT/" src/**/*.csproj
+          echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)" >> $GITHUB_ENV
           cat src/**/*.csproj
 
       # - name: Publish
