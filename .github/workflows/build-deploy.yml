@@ -37,10 +37,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update version
+      - name: Generate package version number
         run: |
-          echo echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$GITHUB_SHA_SHORT" >> $GITHUB_ENV
-          cat src/**/*.csproj
+          echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$GITHUB_SHA_SHORT" >> $GITHUB_ENV
 
       - name: Publish
         run: |
