@@ -42,7 +42,8 @@ jobs:
           sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" src/**/*.csproj
           echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)" >> test.txt
           cat test.txt
-          echo $APPVERSION
+          echo "HELLO=WORLD" >>${GITHUB_ENV}
+          echo $HELLO
           echo $REPO
           echo "-VERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9\.]*\)<\/Version>/\1/p" src/**/*.csproj)"
           cat src/**/*.csproj
