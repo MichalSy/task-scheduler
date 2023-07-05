@@ -20,6 +20,8 @@ jobs:
       statuses: write
       actions: write
       packages: write
+      pull-requests: write
+      issues: write
       repository-projects: write
 
     steps:
