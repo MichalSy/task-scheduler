@@ -54,16 +54,11 @@ jobs:
       #       -p:ContainerImageName=$REPO \
       #       -p:ContainerImageTags=$APPVERSION \
       #       -p:ContainerRegistry=$REGISTRY
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: $REPO
       
-      - name: push docker image
+      - name: tag & push docker image
         run: |
-          docker push $REPO:$APPVERSION
+          docker tag $REPO $REGISTRY/$REPO:$APPVERSION
+          docker image push --all-tags $REGISTRY/$REPO
 
       - name: Checkout deployment repository
         uses: actions/checkout@v3
