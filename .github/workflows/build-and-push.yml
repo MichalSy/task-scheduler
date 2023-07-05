@@ -57,7 +57,12 @@ jobs:
       
       - name: tag & push docker image
         run: |
+          echo "docker tag $REPO $REGISTRY/$REPO:$APPVERSION"
           docker tag $REPO $REGISTRY/$REPO:$APPVERSION
+
+      - name: tag & push docker image
+        run: |
+          echo "docker image push --all-tags $REGISTRY/$REPO"
           docker image push --all-tags $REGISTRY/$REPO
 
       - name: Checkout deployment repository
