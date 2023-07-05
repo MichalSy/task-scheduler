@@ -42,23 +42,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build docker image
-        run: |
-          dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
-            -p:ContainerImageName=$REPO \
-            -p:ContainerImageTags=$APPVERSION 
-
-      # - name: Publish to registry
+      # - name: Build docker image
       #   run: |
       #     dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
       #       -p:ContainerImageName=$REPO \
-      #       -p:ContainerImageTags=$APPVERSION \
-      #       -p:ContainerRegistry=$REGISTRY
+      #       -p:ContainerImageTags=$APPVERSION 
+
+      # # - name: Publish to registry
+      # #   run: |
+      # #     dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
+      # #       -p:ContainerImageName=$REPO \
+      # #       -p:ContainerImageTags=$APPVERSION \
+      # #       -p:ContainerRegistry=$REGISTRY
       
-      - name: Tag and push docker image
-        run: |
-          docker tag $REPO:$APPVERSION $REGISTRY/$REPO:$APPVERSION
-          docker image push --all-tags $REGISTRY/$REPO
+      # - name: Tag and push docker image
+      #   run: |
+      #     docker tag $REPO:$APPVERSION $REGISTRY/$REPO:$APPVERSION
+      #     docker image push --all-tags $REGISTRY/$REPO
           
 
       - name: Checkout deployment repository
@@ -72,9 +72,9 @@ jobs:
       - name: Generate deploy values.yaml
         run: |
           mkdir -p argocd-deployments/apps/$REPO
-          cp ./deploy/values.yaml ./argocd-deployments/apps/$REPO/values.yaml
           echo "appName: $REPO" >> argocd-deployments/apps/$REPO/values.yaml
           echo "appVersion: $APPVERSION" >> argocd-deployments/apps/$REPO/values.yaml
+          cat ./deploy/values.yaml >> ./argocd-deployments/apps/$REPO/values.yaml
           cat argocd-deployments/apps/$REPO/values.yaml
 
       # - name: Commit and push changes
