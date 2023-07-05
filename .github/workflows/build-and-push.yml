@@ -14,15 +14,7 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    permissions:
-      deployments: write
-      contents: write
-      statuses: write
-      actions: write
-      packages: write
-      pull-requests: write
-      issues: write
-      repository-projects: write
+    permissions: write-all
 
     steps:
       - name: Checkout repository
