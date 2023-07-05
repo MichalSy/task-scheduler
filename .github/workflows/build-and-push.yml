@@ -62,7 +62,7 @@ jobs:
       - name: Checkout deployment repository
         uses: actions/checkout@v3
         with:
-          repository: "${{ github.repository_owner }}/argocd-deployments.git"
+          repository: "${{ github.repository_owner }}/argocd-deployments"
           token: ${{ github.token }}
           ref: main
           path: ./argocd-deployments
@@ -78,8 +78,8 @@ jobs:
       - name: Commit and push changes
         run: |
           cd argocd-deployments
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add .
           git commit -m "Update $REPO to $APPVERSION"
           git push
