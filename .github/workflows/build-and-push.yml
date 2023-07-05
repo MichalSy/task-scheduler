@@ -77,11 +77,11 @@ jobs:
           cat ./deploy/values.yaml >> ./argocd-deployments/apps/$REPO/values.yaml
           cat argocd-deployments/apps/$REPO/values.yaml
 
-      # - name: Commit and push changes
-      #   run: |
-      #     cd argocd-deployments
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     git add .
-      #     git commit -m "Update $REPO to $APPVERSION"
-      #     git push
+      - name: Commit and push changes
+        run: |
+          cd argocd-deployments
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update $REPO to $APPVERSION"
+          git push
