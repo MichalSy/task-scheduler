@@ -20,6 +20,7 @@ jobs:
       statuses: write
       actions: write
       packages: write
+      repository-projects: write
 
     steps:
       - name: Checkout repository
