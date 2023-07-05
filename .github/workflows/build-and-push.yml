@@ -65,12 +65,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: "${{ github.repository_owner }}/argocd-deployments.git"
+          token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
           path: ./argocd-deployments
 
       - name: Generate deploy values.yaml
         run: |
-          cp deploy/values.yaml argocd-deployments/apps/$REPO/values.yaml
+          mkdir -p argocd-deployments/apps/$REPO
+          cp ./deploy/values.yaml ./argocd-deployments/apps/$REPO/values.yaml
           echo "appName: $REPO" >> argocd-deployments/apps/$REPO/values.yaml
           echo "appVersion: $APPVERSION" >> argocd-deployments/apps/$REPO/values.yaml
           cat argocd-deployments/apps/$REPO/values.yaml
