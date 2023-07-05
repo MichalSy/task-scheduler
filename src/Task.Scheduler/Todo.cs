@@ -15,7 +15,7 @@ internal static class TodoGenerator
 {
     private static readonly (string[] Prefixes, string[] Suffixes)[] _parts = new[]
         {
-            (new[] { "Walk the", "Feed the" }, new[] { "dog", "cat", "goat" }),
+            (new[] { "Walk th2e", "Feed the" }, new[] { "dog", "cat", "goat" }),
             (new[] { "Do the", "Put away the" }, new[] { "groceries2", "dishes", "laundry" }),
             (new[] { "Clean the" }, new[] { "bathroom", "pool", "blinds", "car" })
         };
