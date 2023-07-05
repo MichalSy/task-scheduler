@@ -49,18 +49,18 @@ jobs:
             -p:ContainerImageTags=$APPVERSION \
             -p:ContainerRegistry=$REGISTRY
 
-      - name: Checkout deployment repository
-        uses: actions/checkout@v3
-        with:
-          repository: "https://github.com/${{ github.repository_owner }}/argocd-deployments.git"
-          path: argocd-deployments
+      # - name: Checkout deployment repository
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: "https://github.com/${{ github.repository_owner }}/argocd-deployments.git"
+      #     path: argocd-deployments
 
-      - name: Generate deploy values.yaml
-        run: |
-          cp deploy/values.yaml argocd-deployments/apps/$REPO/values.yaml
-          echo "appName: $REPO" >> argocd-deployments/apps/$REPO/values.yaml
-          echo "appVersion: $APPVERSION" >> argocd-deployments/apps/$REPO/values.yaml
-          cat argocd-deployments/apps/$REPO/values.yaml
+      # - name: Generate deploy values.yaml
+      #   run: |
+      #     cp deploy/values.yaml argocd-deployments/apps/$REPO/values.yaml
+      #     echo "appName: $REPO" >> argocd-deployments/apps/$REPO/values.yaml
+      #     echo "appVersion: $APPVERSION" >> argocd-deployments/apps/$REPO/values.yaml
+      #     cat argocd-deployments/apps/$REPO/values.yaml
 
       # - name: Commit and push changes
       #   run: |
