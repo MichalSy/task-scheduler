@@ -57,8 +57,8 @@ jobs:
       
       - name: tag & push docker image
         run: |
-          echo "docker tag $REPO $REGISTRY/$REPO:$APPVERSION"
-          docker tag $REPO $REGISTRY/$REPO:$APPVERSION
+          echo "docker tag $REPO:$APPVERSION $REGISTRY/$REPO:$APPVERSION"
+          docker tag $REPO:$APPVERSION $REGISTRY/$REPO:$APPVERSION
 
       - name: tag & push docker image
         run: |
