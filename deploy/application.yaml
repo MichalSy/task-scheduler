@@ -1,23 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: task-scheduler-service-application
+  name: task-scheduler-application
   namespace: argocd
 spec:
   project: default
 
   source:
-    repoURL: https://github.com/MichalSy/task-scheduler.git
+    repoURL: 'https://github.com/MichalSy/argocd-deployments.git'
+    path: charts/dotnet-service
     targetRevision: HEAD
-    path: deploy/k8
+    helm:
+      valueFiles:
+        - ../../apps/task-scheduler/values.yaml
+
   destination: 
     server: https://kubernetes.default.svc
     namespace: argocd-deployments
 
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-
     automated:
       selfHeal: true
       prune: true
+    syncOptions:
+    - CreateNamespace=true
