@@ -65,7 +65,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: "${{ github.repository_owner }}/argocd-deployments.git"
-          path: argocd-deployments
+          path: "./argocd-deployments"
 
       - name: Generate deploy values.yaml
         run: |
