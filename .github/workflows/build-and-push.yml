@@ -46,8 +46,24 @@ jobs:
         run: |
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
             -p:ContainerImageName=$REPO \
-            -p:ContainerImageTags=$APPVERSION \
-            -p:ContainerRegistry=$REGISTRY
+            -p:ContainerImageTags=$APPVERSION 
+
+      # - name: Publish to registry
+      #   run: |
+      #     dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
+      #       -p:ContainerImageName=$REPO \
+      #       -p:ContainerImageTags=$APPVERSION \
+      #       -p:ContainerRegistry=$REGISTRY
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: $REPO
+      
+      - name: push docker image
+        run: |
+          docker push $REPO:$APPVERSION
 
       - name: Checkout deployment repository
         uses: actions/checkout@v3
