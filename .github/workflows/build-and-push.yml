@@ -72,7 +72,7 @@ jobs:
       - name: Generate deploy values.yaml
         run: |
           mkdir -p argocd-deployments/apps/$REPO
-          echo "appName: $REPO" >> argocd-deployments/apps/$REPO/values.yaml
+          echo "appName: $REPO" > argocd-deployments/apps/$REPO/values.yaml
           echo "appVersion: $APPVERSION" >> argocd-deployments/apps/$REPO/values.yaml
           cat ./deploy/values.yaml >> ./argocd-deployments/apps/$REPO/values.yaml
           cat argocd-deployments/apps/$REPO/values.yaml
