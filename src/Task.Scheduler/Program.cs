@@ -1,12 +1,6 @@
-using System.Text.Json.Serialization;
 using Task.Scheduler;
 
 var builder = WebApplication.CreateSlimBuilder(args);
-
-builder.Services.ConfigureHttpJsonOptions(options =>
-{
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
-});
 
 var app = builder.Build();
 
@@ -20,9 +14,3 @@ todosApi.MapGet("/{id}", (int id) =>
         : Results.NotFound());
 
 app.Run();
-
-[JsonSerializable(typeof(Todo[]))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext
-{
-
-}

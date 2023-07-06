@@ -6,7 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <PublishAot>false</PublishAot>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <Version>1.1.0</Version>
   </PropertyGroup>
