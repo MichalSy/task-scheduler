@@ -29,6 +29,8 @@ jobs:
           echo "generate package version number"
           echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
 
+          echo "${{ github.event.repository.name }}"
+
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
         with:
