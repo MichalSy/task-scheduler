@@ -29,7 +29,7 @@ jobs:
           echo "generate package version number"
           echo "APPVERSION=$(sed -n "s/\\s\{1,\}<Version>\([0-9]\{1,\}\.[0-9]\{1,\}\).*<\/Version>/\1/p" src/**/*.csproj).$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
 
-          echo "${{ github.event.repository.name }}"
+          echo "APPNAME=${{ github.event.repository.name }}" >>${GITHUB_ENV}
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3
@@ -73,11 +73,11 @@ jobs:
 
       - name: Generate deploy values.yaml
         run: |
-          mkdir -p argocd-deployments/apps/$REPO
-          echo "appName: $REPO" > argocd-deployments/apps/$REPO/values.yaml
-          echo "appVersion: $APPVERSION" >> argocd-deployments/apps/$REPO/values.yaml
-          cat ./deploy/values.yaml >> ./argocd-deployments/apps/$REPO/values.yaml
-          cat argocd-deployments/apps/$REPO/values.yaml
+          mkdir -p argocd-deployments/apps/$APPNAME
+          echo "appName: $APPNAME" > argocd-deployments/apps/$APPNAME/values.yaml
+          echo "appVersion: $APPVERSION" >> argocd-deployments/apps/$APPNAME/values.yaml
+          cat ./deploy/values.yaml >> ./argocd-deployments/apps/$APPNAME/values.yaml
+          cat argocd-deployments/apps/$APPNAME/values.yaml
 
       - name: Commit and push changes
         run: |
@@ -86,5 +86,5 @@ jobs:
           git config --global user.email github-actions@github.com
           git config --global credential.helper cache
           git add .
-          git commit -m "Update $REPO to $APPVERSION"
+          git commit -m "Update $APPNAME to $APPVERSION"
           git push
