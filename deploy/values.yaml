@@ -1,1 +1,3 @@
-replicaCount: 5
+replicaCount: 1
+secrets:
+  - name: ConnectionString

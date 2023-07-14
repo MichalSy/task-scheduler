@@ -1,6 +1,10 @@
 using Task.Scheduler;
+using FastEndpoints.Swagger;
 
-var builder = WebApplication.CreateSlimBuilder(args);
+var builder = WebApplication.CreateBuilder();
+
+builder.Services.AddFastEndpoints();
+builder.Services.SwaggerDocument();
 
 var app = builder.Build();
 
@@ -13,4 +17,6 @@ todosApi.MapGet("/{id}", (int id) =>
         ? Results.Ok(todo)
         : Results.NotFound());
 
+app.UseFastEndpoints();
+app.UseSwaggerGen();
 app.Run();
