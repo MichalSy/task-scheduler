@@ -17,6 +17,12 @@ todosApi.MapGet("/{id}", (int id) =>
         ? Results.Ok(todo)
         : Results.NotFound());
 
+app.MapGet("/test", () =>
+{
+    return Environment.GetEnvironmentVariables();
+});
+
+
 app.UseFastEndpoints();
 app.UseSwaggerGen();
 app.Run();
