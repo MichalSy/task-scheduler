@@ -36,20 +36,18 @@ jobs:
         with:
           dotnet-version: '8.0.100-preview.5.23303.2'
 
-      # - name: Log in to the Container registry
-      #   uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker image
         run: |
-          docker login $REGISTRY -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
             -p:ContainerImageName=$REPO \
             -p:ContainerImageTags=$APPVERSION
-          docker image ls
 
       # - name: Publish to registry
       #   run: |
@@ -60,7 +58,6 @@ jobs:
       
       - name: Tag and push docker image
         run: |
-          docker image ls
           docker tag $REPO:$APPVERSION $REGISTRY/$REPO:$APPVERSION
           docker image push --all-tags $REGISTRY/$REPO
           
