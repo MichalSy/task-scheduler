@@ -47,14 +47,14 @@ jobs:
         run: |
           docker login $REGISTRY -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
-            -p:ContainerRepository=$REPO \
+            -p:ContainerImageName=$REPO \
             -p:ContainerImageTags=$APPVERSION
           docker image ls
 
       # - name: Publish to registry
       #   run: |
       #     dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
-      #       -p:ContainerRepository=$REPO \
+      #       -p:ContainerImageName=$REPO \
       #       -p:ContainerImageTags=$APPVERSION \
       #       -p:ContainerRegistry=$REGISTRY
       
