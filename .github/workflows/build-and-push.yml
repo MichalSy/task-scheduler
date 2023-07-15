@@ -49,6 +49,12 @@ jobs:
             -p:ContainerRepository=build \
             -p:ContainerImageTags=tag
 
+      - name: Build docker image
+        run: |
+          dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
+            -p:ContainerRepository=build \
+            -p:ContainerImageTags=tag
+
       # - name: Publish to registry
       #   run: |
       #     dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
