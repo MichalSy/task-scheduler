@@ -58,6 +58,7 @@ jobs:
       
       - name: Tag and push docker image
         run: |
+          docker image ls
           docker tag $REPO:$APPVERSION $REGISTRY/$REPO:$APPVERSION
           docker image push --all-tags $REGISTRY/$REPO
           
