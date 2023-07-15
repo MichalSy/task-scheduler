@@ -46,14 +46,9 @@ jobs:
       - name: Build docker image
         run: |
           dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
-            -p:ContainerRepository=build \
-            -p:ContainerImageTags=tag
-
-      - name: Build docker image
-        run: |
-          dotnet publish src/**/*.csproj --os linux --arch x64 --configuration Release /p:UseAppHost=false /t:PublishContainer \
-            -p:ContainerRepository=build \
-            -p:ContainerImageTags=tag
+            -p:ContainerRepository=$REPO \
+            -p:ContainerImageTags=$APPVERSION
+          docker image ls
 
       # - name: Publish to registry
       #   run: |
@@ -65,7 +60,7 @@ jobs:
       - name: Tag and push docker image
         run: |
           docker image ls
-          docker tag build:tag $REGISTRY/$REPO:$APPVERSION
+          docker tag $REPO:$APPVERSION $REGISTRY/$REPO:$APPVERSION
           docker image push --all-tags $REGISTRY/$REPO
           
 
