@@ -11,12 +11,14 @@
   <PropertyGroup>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <Version>1.1.0</Version>
+    <UserSecretsId>e75bd90b-1bde-4f1a-bd16-4b8e4f26b13a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="5.13.0" />
     <PackageReference Include="FastEndpoints.Swagger" Version="5.13.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.2" />
+    <PackageReference Include="Neo4j.Driver" Version="5.10.0" />
   </ItemGroup>
 
 </Project>
