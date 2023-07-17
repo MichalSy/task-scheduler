@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33808.371
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task.Scheduler", "Task.Scheduler\Task.Scheduler.csproj", "{37D37D02-9FA0-4B6B-9E14-00175C502C20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.Scheduler", "Task.Scheduler\Task.Scheduler.csproj", "{37D37D02-9FA0-4B6B-9E14-00175C502C20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{E817E5E2-EB96-4954-B345-751B2B1E614B}"
+	ProjectSection(SolutionItems) = preProject
+		..\deploy\application.yaml = ..\deploy\application.yaml
+		..\deploy\values.yaml = ..\deploy\values.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
